@@ -1,6 +1,7 @@
 package com.ataulm.notes;
 
 enum Beat {
+
     SEMIQUAVER(0.25),
     QUAVER(0.5),
     CROCHET(1),
@@ -12,4 +13,5 @@ enum Beat {
     Beat(double crochetValue) {
         this.crochetValue = crochetValue;
     }
+
 }
