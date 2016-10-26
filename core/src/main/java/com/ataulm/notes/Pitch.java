@@ -2,7 +2,13 @@ package com.ataulm.notes;
 
 class Pitch {
 
-    Step step;
-    Octave octave;
-    Accidental accidental;
+    private final Step step;
+    private final Octave octave;
+    private final Accidental accidental;
+
+    Pitch(Step step, Octave octave, Accidental accidental) {
+        this.step = step;
+        this.octave = octave;
+        this.accidental = accidental;
+    }
 }
