@@ -24,4 +24,19 @@ class Measure implements Iterable<Bucket> {
         return buckets.iterator();
     }
 
+    public int notes() {
+        int notes = 0;
+        for (Bucket bucket : buckets) {
+            notes += bucket.size();
+        }
+        return notes;
+    }
+
+    public int size() {
+        return buckets.size();
+    }
+
+    public Bucket get(int position) {
+        return buckets.get(position);
+    }
 }

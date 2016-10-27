@@ -21,4 +21,8 @@ class Bucket implements Iterable<Note> {
         return notes.iterator();
     }
 
+    int size() {
+        return notes.size();
+    }
+
 }
