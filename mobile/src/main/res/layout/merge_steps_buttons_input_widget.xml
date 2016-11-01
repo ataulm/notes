@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <Button
+    android:id="@+id/steps_buttons_input_c"
+    android:text="c"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_d"
+    android:text="d"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_e"
+    android:text="e"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_f"
+    android:text="f"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_g"
+    android:text="g"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_a"
+    android:text="a"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+  <Button
+    android:id="@+id/steps_buttons_input_b"
+    android:text="b"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
+</merge>

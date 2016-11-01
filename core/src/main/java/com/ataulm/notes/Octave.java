@@ -2,16 +2,23 @@ package com.ataulm.notes;
 
 enum Octave {
 
-    DOUBLE_CONTRA,
-    SUB_CONTRA,
-    CONTRA,
-    GREAT,
-    SMALL,
-    ONE_LINE,
-    TWO_LINE,
-    THREE_LINE,
-    FOUR_LINE,
-    FIVE_LINE,
-    SIX_LINE
+    CONTRA(1),
+    GREAT(2),
+    SMALL(3),
+    ONE_LINE(4),
+    TWO_LINE(5),
+    THREE_LINE(6),
+    FOUR_LINE(7),
+    FIVE_LINE(8);
+
+    private final int scientificNotation;
+
+    Octave(int scientificNotation) {
+        this.scientificNotation = scientificNotation;
+    }
+
+    public int scientificNotation() {
+        return scientificNotation;
+    }
 
 }

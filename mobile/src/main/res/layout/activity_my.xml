@@ -4,7 +4,15 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <com.ataulm.notes.MeasureWidget
+  <com.ataulm.notes.TrebleStaffWidget
+    android:id="@+id/notes_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"/>
+
+  <com.ataulm.notes.StepButtonsInputWidget
+    android:id="@+id/input_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
