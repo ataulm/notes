@@ -36,20 +36,20 @@ public class StepButtonsInputWidget extends LinearLayout implements InputView {
     @Override
     public void update(final OnClickNoteListener onClickNoteListener) {
         for (Map.Entry<Step, View> stepViewEntry : buttons.entrySet()) {
-            final Note note = getNote(stepViewEntry);
+            final OldNote oldNote = getNote(stepViewEntry);
             View view = stepViewEntry.getValue();
 
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickNoteListener.onClick(note);
+                    onClickNoteListener.onClick(oldNote);
                 }
             });
         }
     }
 
-    private Note getNote(Map.Entry<Step, View> stepViewEntry) {
-        return new Note(new Pitch(stepViewEntry.getKey(), Octave.ONE_LINE), Staff.TREBLE);
+    private OldNote getNote(Map.Entry<Step, View> stepViewEntry) {
+        return new OldNote(new Pitch(stepViewEntry.getKey(), Octave.ONE_LINE), Staff.TREBLE);
     }
 
 }

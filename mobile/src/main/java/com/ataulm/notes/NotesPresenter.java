@@ -19,8 +19,8 @@ class NotesPresenter {
     }
 
     public void present() {
-        final List<Note> notes = notesFetcher.fetchNotes();
-        final List<NoteViewModel> noteViewModels = viewModelsFactory.createNoteViewModels(notes);
+        final List<OldNote> oldNotes = notesFetcher.fetchNotes();
+        final List<NoteViewModel> noteViewModels = viewModelsFactory.createNoteViewModels(oldNotes);
 
         notesView.update(noteViewModels);
         inputView.update(new OnClickNoteListener(noteViewModels, inputValidator));

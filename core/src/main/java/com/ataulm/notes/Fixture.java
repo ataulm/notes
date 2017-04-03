@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Fixture {
 
-    public static List<Note> createNotes() {
+    public static List<OldNote> createNotes() {
         return Arrays.asList(
-                new Note(new Pitch(Step.E, Octave.ONE_LINE), Staff.TREBLE),
-                new Note(new Pitch(Step.G, Octave.ONE_LINE), Staff.TREBLE),
-                new Note(new Pitch(Step.B, Octave.ONE_LINE), Staff.TREBLE),
-                new Note(new Pitch(Step.D, Octave.TWO_LINE), Staff.TREBLE)
+                new OldNote(new Pitch(Step.E, Octave.ONE_LINE), Staff.TREBLE),
+                new OldNote(new Pitch(Step.G, Octave.ONE_LINE), Staff.TREBLE),
+                new OldNote(new Pitch(Step.B, Octave.ONE_LINE), Staff.TREBLE),
+                new OldNote(new Pitch(Step.D, Octave.TWO_LINE), Staff.TREBLE)
         );
     }
 

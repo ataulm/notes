@@ -2,16 +2,16 @@ package com.ataulm.notes;
 
 class NoteViewModel {
 
-    private final Note note;
+    private final OldNote oldNote;
     private final Status status;
 
-    NoteViewModel(Note note, Status status) {
-        this.note = note;
+    NoteViewModel(OldNote oldNote, Status status) {
+        this.oldNote = oldNote;
         this.status = status;
     }
 
-    public Note note() {
-        return note;
+    public OldNote note() {
+        return oldNote;
     }
 
     public Status status() {
