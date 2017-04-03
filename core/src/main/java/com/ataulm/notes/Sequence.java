@@ -20,4 +20,12 @@ public abstract class Sequence {
 
     public abstract Optional<ConcurrentNotes> incorrectNotes();
 
+    public Sequence withPositionIncremented() {
+        return new AutoValue_Sequence(notes(), position() + 1, Optional.<ConcurrentNotes>absent());
+    }
+
+    public Sequence withIncorrect(ConcurrentNotes notes) {
+        return new AutoValue_Sequence(notes(), position(), Optional.of(notes));
+    }
+
 }
