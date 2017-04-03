@@ -1,51 +1,24 @@
 package com.ataulm.notes;
 
-public class Note {
+import com.google.auto.value.AutoValue;
 
-    private final Pitch pitch;
-    private final Staff staff;
+@AutoValue
+public abstract class Note {
 
-    public Note(Pitch pitch, Staff staff) {
-        this.pitch = pitch;
-        this.staff = staff;
+    private static final int LOWEST_MIDI_NOTE = 0;
+    private static final int HIGHEST_MIDI_NOTE = 127;
+
+    public static Note create(int midi) {
+        return new AutoValue_Note(checkNotOutOfRange(midi));
     }
 
-    public Pitch pitch() {
-        return pitch;
-    }
-
-    public Staff staff() {
-        return staff;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+    private static int checkNotOutOfRange(int midiNoteNumber) {
+        if (midiNoteNumber < LOWEST_MIDI_NOTE && midiNoteNumber > HIGHEST_MIDI_NOTE) {
+            throw new IllegalArgumentException("MIDI notes range from " + LOWEST_MIDI_NOTE + "-" + HIGHEST_MIDI_NOTE + " inclusive");
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Note note = (Note) o;
-
-        if (!pitch.equals(note.pitch)) {
-            return false;
-        }
-        return staff == note.staff;
-
+        return midiNoteNumber;
     }
 
-    @Override
-    public int hashCode() {
-        int result = pitch.hashCode();
-        result = 31 * result + staff.hashCode();
-        return result;
-    }
+    public abstract int midi();
 
-    @Override
-    public String toString() {
-        return pitch() + " (" + staff() + ")";
-    }
 }
-

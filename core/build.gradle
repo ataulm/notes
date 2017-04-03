@@ -1,8 +1,19 @@
 plugins {
-    id 'net.ltgt.apt' version '0.9'
+    id 'net.ltgt.apt' version '0.10'
 }
 
 apply plugin: 'java'
+
+/////////////////////////////////////////////////////////////////////////
+// for AutoValue in ASide
+/////////////////////////////////////////////////////////////////////////
+apply plugin: 'idea'
+idea {
+    module {
+        generatedSourceDirs += project.file('build/generated/source/apt')
+    }
+}
+/////////////////////////////////////////////////////////////////////////
 
 sourceCompatibility=1.7
 targetCompatibility=1.7
