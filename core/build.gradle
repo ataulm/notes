@@ -21,9 +21,9 @@ targetCompatibility=1.7
 dependencies {
     compileOnly libraries.autoValue
     apt libraries.autoValue
+    compile libraries.findbugsAnnotations
 
     testCompile libraries.festAssertCore
-    testCompile libraries.findbugsAnnotations
     testCompile libraries.jUnit
     testCompile libraries.mockitoCore
 }
