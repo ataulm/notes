@@ -1,4 +1,4 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -36,20 +36,20 @@ public class StepButtonsInputWidget extends LinearLayout implements InputView {
     @Override
     public void update(final OnClickNoteListener onClickNoteListener) {
         for (Map.Entry<Step, View> stepViewEntry : buttons.entrySet()) {
-            final OldNote oldNote = getNote(stepViewEntry);
+            final Note note = getNote(stepViewEntry);
             View view = stepViewEntry.getValue();
 
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickNoteListener.onClick(oldNote);
+                    onClickNoteListener.onClick(note);
                 }
             });
         }
     }
 
-    private OldNote getNote(Map.Entry<Step, View> stepViewEntry) {
-        return new OldNote(new Pitch(stepViewEntry.getKey(), Octave.ONE_LINE), Staff.TREBLE);
+    private Note getNote(Map.Entry<Step, View> stepViewEntry) {
+        return new Note(new Pitch(stepViewEntry.getKey(), Octave.ONE_LINE), Staff.TREBLE);
     }
 
 }

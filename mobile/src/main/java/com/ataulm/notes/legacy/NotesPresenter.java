@@ -1,4 +1,4 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ class NotesPresenter {
     }
 
     public void present() {
-        final List<OldNote> oldNotes = notesFetcher.fetchNotes();
-        final List<NoteViewModel> noteViewModels = viewModelsFactory.createNoteViewModels(oldNotes);
+        final List<Note> notes = notesFetcher.fetchNotes();
+        final List<NoteViewModel> noteViewModels = viewModelsFactory.createNoteViewModels(notes);
 
         notesView.update(noteViewModels);
         inputView.update(new OnClickNoteListener(noteViewModels, inputValidator));

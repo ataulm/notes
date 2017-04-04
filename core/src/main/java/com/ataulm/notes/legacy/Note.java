@@ -1,11 +1,11 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
-public class OldNote {
+public class Note {
 
     private final Pitch pitch;
     private final Staff staff;
 
-    public OldNote(Pitch pitch, Staff staff) {
+    public Note(Pitch pitch, Staff staff) {
         this.pitch = pitch;
         this.staff = staff;
     }
@@ -27,12 +27,12 @@ public class OldNote {
             return false;
         }
 
-        OldNote oldNote = (OldNote) o;
+        Note note = (Note) o;
 
-        if (!pitch.equals(oldNote.pitch)) {
+        if (!pitch.equals(note.pitch)) {
             return false;
         }
-        return staff == oldNote.staff;
+        return staff == note.staff;
 
     }
 

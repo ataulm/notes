@@ -4,14 +4,14 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <com.ataulm.notes.TrebleStaffWidget
+  <com.ataulm.notes.legacy.TrebleStaffWidget
     android:id="@+id/notes_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"/>
 
-  <com.ataulm.notes.StepButtonsInputWidget
+  <com.ataulm.notes.legacy.StepButtonsInputWidget
     android:id="@+id/input_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

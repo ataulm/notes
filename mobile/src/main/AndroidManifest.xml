@@ -7,11 +7,12 @@
     android:icon="@drawable/ic_launcher"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".MyActivity" />
+    <activity android:name=".VirtualPianoActivity" />
+    <activity android:name=".legacy.MyActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity=".MyActivity">
+      android:targetActivity=".VirtualPianoActivity">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

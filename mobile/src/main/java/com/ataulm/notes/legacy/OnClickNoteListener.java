@@ -1,4 +1,4 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ class OnClickNoteListener {
         this.inputValidator = inputValidator;
     }
 
-    public void onClick(OldNote oldNote) {
-        OldNote nextTargetOldNote = getNextTargetNote(noteViewModels);
-        boolean matches = inputValidator.matches(oldNote, nextTargetOldNote);
+    public void onClick(Note note) {
+        Note nextTargetNote = getNextTargetNote(noteViewModels);
+        boolean matches = inputValidator.matches(note, nextTargetNote);
         if (matches) {
             // mark this drawable as correct
             // check if all notes are correct and callback finished
@@ -23,7 +23,7 @@ class OnClickNoteListener {
         }
     }
 
-    private OldNote getNextTargetNote(List<NoteViewModel> noteViewModels) {
+    private Note getNextTargetNote(List<NoteViewModel> noteViewModels) {
         for (NoteViewModel target : noteViewModels) {
             if (target.status() == NoteViewModel.Status.CORRECT) {
                 continue;

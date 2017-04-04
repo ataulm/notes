@@ -1,17 +1,17 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 class NoteViewModel {
 
-    private final OldNote oldNote;
+    private final Note note;
     private final Status status;
 
-    NoteViewModel(OldNote oldNote, Status status) {
-        this.oldNote = oldNote;
+    NoteViewModel(Note note, Status status) {
+        this.note = note;
         this.status = status;
     }
 
-    public OldNote note() {
-        return oldNote;
+    public Note note() {
+        return note;
     }
 
     public Status status() {

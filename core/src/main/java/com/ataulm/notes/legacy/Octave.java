@@ -1,4 +1,4 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 enum Octave {
 

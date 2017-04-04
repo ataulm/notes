@@ -1,4 +1,7 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
+
+import com.ataulm.notes.legacy.Octave;
+import com.ataulm.notes.legacy.Pitch;
 
 class TrebleStaffPitchOffsetFromMiddleCCalculator {
 

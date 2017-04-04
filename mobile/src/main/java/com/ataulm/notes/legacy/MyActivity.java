@@ -1,4 +1,4 @@
-package com.ataulm.notes;
+package com.ataulm.notes.legacy;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
