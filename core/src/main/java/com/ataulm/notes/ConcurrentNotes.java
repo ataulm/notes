@@ -22,4 +22,8 @@ public abstract class ConcurrentNotes {
 
     abstract List<Note> notes();
 
+    public boolean isEmpty() {
+        return notes().isEmpty();
+    }
+
 }

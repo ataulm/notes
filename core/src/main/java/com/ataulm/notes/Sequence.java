@@ -28,4 +28,12 @@ public abstract class Sequence {
         return new AutoValue_Sequence(notes(), position(), Optional.of(notes));
     }
 
+    public int length() {
+        return notes().size();
+    }
+
+    public ConcurrentNotes get(int position) {
+        return notes().get(position);
+    }
+
 }
