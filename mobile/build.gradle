@@ -40,4 +40,7 @@ dependencies {
 
     compile libraries.butterknife
     apt libraries.butterknifeCompiler
+
+    apt libraries.autoValue
+    provided libraries.autoValue
 }
