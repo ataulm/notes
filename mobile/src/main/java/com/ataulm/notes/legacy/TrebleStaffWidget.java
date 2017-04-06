@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.ataulm.notes.R;
+
 import java.util.ArrayList;
 import java.util.List;
 

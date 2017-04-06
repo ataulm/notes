@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ataulm.notes.R;
+
 import java.util.HashMap;
 import java.util.Map;
 

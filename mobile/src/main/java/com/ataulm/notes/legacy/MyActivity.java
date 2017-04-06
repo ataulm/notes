@@ -3,6 +3,8 @@ package com.ataulm.notes.legacy;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ataulm.notes.R;
+
 import butterknife.ButterKnife;
 
 public class MyActivity extends AppCompatActivity {
