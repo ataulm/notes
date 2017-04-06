@@ -43,4 +43,8 @@ dependencies {
 
     apt libraries.autoValue
     provided libraries.autoValue
+
+    testCompile libraries.festAssertCore
+    testCompile libraries.jUnit
+    testCompile libraries.mockitoCore
 }
