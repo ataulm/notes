@@ -36,7 +36,6 @@ dependencies {
 
     compile libraries.supportAppCompatV7
     compile libraries.supportDesign
-    compile libraries.supportRecyclerView
     compile libraries.supportV13
 
     compile libraries.butterknife
