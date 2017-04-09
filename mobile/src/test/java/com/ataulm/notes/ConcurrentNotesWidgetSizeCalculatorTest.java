@@ -1,13 +1,10 @@
 package com.ataulm.notes;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 
 import static com.ataulm.notes.Fixtures.C4;
+import static com.ataulm.notes.Fixtures.G4;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ConcurrentNotesWidgetSizeCalculatorTest {
@@ -24,12 +21,6 @@ public class ConcurrentNotesWidgetSizeCalculatorTest {
     private static final int NATURAL_WIDTH = 10;
     private static final int NATURAL_HEIGHT = 10;
 
-    @Rule
-    public MockitoRule rule = MockitoJUnit.rule();
-
-    @Mock
-    PositionsApartFromMiddleCCalculator positionCalculator;
-
     ConcurrentNotesWidgetSizeCalculator calculator;
 
     @Before
@@ -40,7 +31,7 @@ public class ConcurrentNotesWidgetSizeCalculatorTest {
                 Size.create(FLAT_WIDTH, FLAT_HEIGHT),
                 Size.create(NATURAL_WIDTH, NATURAL_HEIGHT)
         );
-        calculator = new ConcurrentNotesWidgetSizeCalculator(symbolSizes, positionCalculator);
+        calculator = new ConcurrentNotesWidgetSizeCalculator(symbolSizes, new PositionsApartFromMiddleCCalculator());
     }
 
     @Test
@@ -50,6 +41,15 @@ public class ConcurrentNotesWidgetSizeCalculatorTest {
         Size size = calculator.size(Key.C_MAJ, notes);
 
         assertThat(size).isEqualTo(Size.create(NOTE_WIDTH, NOTE_HEIGHT));
+    }
+
+    @Test
+    public void whenSizingFooNote_thenSizeMatchesSingleNote() {
+        ConcurrentNotes notes = ConcurrentNotes.create(C4, G4);
+
+        Size size = calculator.size(Key.C_MAJ, notes);
+
+        assertThat(size.height()).isEqualTo(3 * NOTE_HEIGHT);
     }
 
 }

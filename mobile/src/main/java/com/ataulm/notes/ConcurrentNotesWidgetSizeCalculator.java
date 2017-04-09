@@ -49,9 +49,23 @@ class ConcurrentNotesWidgetSizeCalculator {
         return symbolSizes.note.width();
     }
 
+    // TODO: since accidentals are generally taller than single notes, we can't rely solely on notes to determine height
     private int requiredHeight(Key key, List<Note> notes) {
-        // TODO: need to account for accidentals
-        return symbolSizes.note.height();
+        if (notes.isEmpty()) {
+            return 0;
+        }
+
+        if (notes.size() == 1) {
+            return symbolSizes.note.height();
+        }
+
+        int firstNotePosition = positionCalculator.positionsApartFromMiddleC(key, notes.get(0));
+        int lastNotePosition = positionCalculator.positionsApartFromMiddleC(key, notes.get(notes.size() - 1));
+        int difference = Math.abs(lastNotePosition - firstNotePosition);
+
+        int foo = (difference - 1) * symbolSizes.note.height();
+        int bar = difference % 2 == 0 ? 0 : (int) (0.5 * symbolSizes.note.height());
+        return foo + bar;
     }
 
 }
