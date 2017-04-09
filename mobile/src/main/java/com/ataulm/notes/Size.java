@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 abstract class Size {
 
-    public static Size create(@Px int width, @Px int height) {
+    static Size create(@Px int width, @Px int height) {
         return new AutoValue_Size(width, height);
     }
 
