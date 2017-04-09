@@ -19,6 +19,10 @@ public abstract class Note {
         }
     }
 
+    boolean isHigherThan(Note note) {
+        return midi() > note.midi();
+    }
+
     public abstract int midi();
 
 }
