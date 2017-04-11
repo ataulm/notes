@@ -5,9 +5,9 @@ class SongFactory {
     private static final ConcurrentNotes C = ConcurrentNotes.create(Fixtures.C4, Fixtures.E4, Fixtures.G4);
     private static final ConcurrentNotes F_2ND_INV = ConcurrentNotes.create(Fixtures.C4, Fixtures.F4, Fixtures.A4);
     private static final ConcurrentNotes G_2ND_INV = ConcurrentNotes.create(Fixtures.D4, Fixtures.G4, Fixtures.B4);
-    private static final ConcurrentNotes EM = ConcurrentNotes.create(Fixtures.E4, Fixtures.G4, Fixtures.B5);
+    private static final ConcurrentNotes EM = ConcurrentNotes.create(Fixtures.E4, Fixtures.G4, Fixtures.B4);
     private static final ConcurrentNotes AM_2ND_INV = ConcurrentNotes.create(Fixtures.E4, Fixtures.A4, Fixtures.C5);
-    private static final ConcurrentNotes G = ConcurrentNotes.create(Fixtures.G4, Fixtures.B5, Fixtures.D5);
+    private static final ConcurrentNotes G = ConcurrentNotes.create(Fixtures.G4, Fixtures.B4, Fixtures.D5);
     private static final ConcurrentNotes C_2ND_INV = ConcurrentNotes.create(Fixtures.G4, Fixtures.C5, Fixtures.E5);
 
     static Sequence pachelbelsCanon() {
