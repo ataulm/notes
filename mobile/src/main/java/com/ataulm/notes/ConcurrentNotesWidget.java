@@ -14,7 +14,7 @@ public class ConcurrentNotesWidget extends View {
 
     public ConcurrentNotesWidget(Context context) {
         super(context);
-        setBackgroundColor(Color.RED);
+        setBackgroundColor(Color.BLACK);
 
         positionCalculator = new PositionsApartFromMiddleCCalculator();
         symbolSizes = MusicalSymbolSizes.create();

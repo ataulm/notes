@@ -14,7 +14,7 @@ public class VirtualPianoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_virtual_piano);
 
         TrebleStaffWidget trebleStaffWidget = (TrebleStaffWidget) findViewById(R.id.treble_staff_widget);
-        trebleStaffWidget.bind(pachelbelsCanon());
+        trebleStaffWidget.bind(SongFactory.maryHadALittleLamb());
     }
 
 }

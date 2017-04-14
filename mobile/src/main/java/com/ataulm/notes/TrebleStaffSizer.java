@@ -68,6 +68,11 @@ class TrebleStaffSizer {
         };
     }
 
+    int middleCY() {
+        int noteHeight = musicalSymbolSizes.note.height();
+        return 10 * noteHeight;
+    }
+
     @Px
     int height() {
         return 14 * musicalSymbolSizes.note.height();

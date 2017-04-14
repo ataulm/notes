@@ -21,7 +21,7 @@ class SongFactory {
         );
     }
 
-    Sequence maryHadALittleLamb() {
+    static Sequence maryHadALittleLamb() {
         return Sequence.create(
                 ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.D4), ConcurrentNotes.create(Fixtures.C4), ConcurrentNotes.create(Fixtures.D4), ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.E4),
                 ConcurrentNotes.create(Fixtures.D4), ConcurrentNotes.create(Fixtures.D4), ConcurrentNotes.create(Fixtures.D4), ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.E4), ConcurrentNotes.create(Fixtures.E4),
