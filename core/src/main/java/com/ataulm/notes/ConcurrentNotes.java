@@ -5,10 +5,11 @@ import com.google.auto.value.AutoValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 @AutoValue
-public abstract class ConcurrentNotes {
+public abstract class ConcurrentNotes implements Iterable<Note> {
 
     public static ConcurrentNotes create(Note... notes) {
         List<Note> notesWithoutDuplicates = asListWithNoDuplicate(notes);
@@ -21,6 +22,11 @@ public abstract class ConcurrentNotes {
     }
 
     abstract List<Note> notes();
+
+    @Override
+    public Iterator<Note> iterator() {
+        return notes().iterator();
+    }
 
     public boolean isEmpty() {
         return notes().isEmpty();

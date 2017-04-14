@@ -2,14 +2,14 @@ package com.ataulm.notes;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,17 +17,30 @@ import java.util.List;
  */
 public class TrebleStaffWidget extends FrameLayout {
 
-    private Key key = Key.C_MAJ;
-
-    private Drawable trebleClefDrawable;
     private static final int WINDOW_SIZE = 4;
+
+    private final Paint paint;
+    private final Drawable trebleClefDrawable;
+    private final TrebleStaffSizer trebleStaffSizer = TrebleStaffSizer.create();
+
+    private Key key = Key.C_MAJ;
 
     public TrebleStaffWidget(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
 
         trebleClefDrawable = ContextCompat.getDrawable(context, R.drawable.vec_treble_clef);
-        trebleClefDrawable.setBounds(0, 0, 32, 90);
+        Size trebleClefSize = trebleStaffSizer.clefSize();
+        trebleClefDrawable.setBounds(0, 0, trebleClefSize.width(), trebleClefSize.height());
+
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int exactHeightMeasureSpec = MeasureSpec.makeMeasureSpec(trebleStaffSizer.height(), MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, exactHeightMeasureSpec);
     }
 
     void setKey(Key key) {
@@ -61,15 +74,36 @@ public class TrebleStaffWidget extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
+            ConcurrentNotesWidget child = (ConcurrentNotesWidget) getChildAt(i);
             int childLeft = i * 20;
-            child.layout(childLeft, 0, childLeft + child.getMeasuredWidth(), child.getMeasuredHeight());
+            child.layout(childLeft, child.topToMiddleC(), childLeft + child.getMeasuredWidth(), child.getMeasuredHeight());
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int restoreCount = canvas.save();
+        Position clefPosition = trebleStaffSizer.clefPosition();
+        canvas.translate(clefPosition.x(), clefPosition.y());
         trebleClefDrawable.draw(canvas);
+        canvas.restoreToCount(restoreCount);
+        drawStaff(canvas);
     }
+
+    private void drawStaff(Canvas canvas) {
+        int viewWidth = getWidth();
+
+        int noteHeight = 10;
+        int lineStartX = noteHeight;
+        int lineEndX = viewWidth - lineStartX;
+
+        for (int lineY : trebleStaffSizer.linesY()) {
+            canvas.drawLine(lineStartX, lineY, lineEndX, lineY, paint);
+        }
+
+        canvas.drawLine(lineStartX, 5 * noteHeight, lineStartX, 9 * noteHeight, paint);
+        canvas.drawLine(lineEndX, 5 * noteHeight, lineEndX, 9 * noteHeight, paint);
+    }
+
 }

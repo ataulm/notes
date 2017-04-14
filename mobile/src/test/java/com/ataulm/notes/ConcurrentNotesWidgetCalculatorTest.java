@@ -7,7 +7,7 @@ import static com.ataulm.notes.Fixtures.C4;
 import static com.ataulm.notes.Fixtures.G4;
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class ConcurrentNotesWidgetSizeCalculatorTest {
+public class ConcurrentNotesWidgetCalculatorTest {
 
     private static final int NOTE_WIDTH = 10;
     private static final int NOTE_HEIGHT = 10;
@@ -21,7 +21,7 @@ public class ConcurrentNotesWidgetSizeCalculatorTest {
     private static final int NATURAL_WIDTH = 10;
     private static final int NATURAL_HEIGHT = 10;
 
-    ConcurrentNotesWidgetSizeCalculator calculator;
+    ConcurrentNotesWidgetCalculator calculator;
 
     @Before
     public void setUp() {
@@ -31,25 +31,25 @@ public class ConcurrentNotesWidgetSizeCalculatorTest {
                 Size.create(FLAT_WIDTH, FLAT_HEIGHT),
                 Size.create(NATURAL_WIDTH, NATURAL_HEIGHT)
         );
-        calculator = new ConcurrentNotesWidgetSizeCalculator(symbolSizes, new PositionsApartFromMiddleCCalculator());
+        calculator = new ConcurrentNotesWidgetCalculator(symbolSizes, new PositionsApartFromMiddleCCalculator());
     }
 
     @Test
     public void whenSizingSingleNote_thenSizeMatchesSingleNote() {
         ConcurrentNotes notes = ConcurrentNotes.create(C4);
 
-        Size size = calculator.size(Key.C_MAJ, notes);
+        ConcurrentNotesWidgetCalculator.Output output = calculator.size(Key.C_MAJ, notes);
 
-        assertThat(size).isEqualTo(Size.create(NOTE_WIDTH, NOTE_HEIGHT));
+        assertThat(output.widgetSize()).isEqualTo(Size.create(NOTE_WIDTH, NOTE_HEIGHT));
     }
 
     @Test
     public void whenSizingFooNote_thenSizeMatchesSingleNote() {
         ConcurrentNotes notes = ConcurrentNotes.create(C4, G4);
 
-        Size size = calculator.size(Key.C_MAJ, notes);
+        ConcurrentNotesWidgetCalculator.Output output = calculator.size(Key.C_MAJ, notes);
 
-        assertThat(size.height()).isEqualTo(3 * NOTE_HEIGHT);
+        assertThat(output.widgetSize().height()).isEqualTo(3 * NOTE_HEIGHT);
     }
 
 }

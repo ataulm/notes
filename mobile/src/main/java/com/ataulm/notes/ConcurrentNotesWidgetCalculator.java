@@ -1,6 +1,10 @@
 package com.ataulm.notes;
 
 
+import android.support.annotation.Px;
+
+import com.google.auto.value.AutoValue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,7 +13,7 @@ import java.util.List;
 /*
  * This class depends on knowing what the layout looks like. Makes sense if it handles size and position of different notes.
  */
-class ConcurrentNotesWidgetSizeCalculator {
+class ConcurrentNotesWidgetCalculator {
 
     private static final Comparator<Note> NOTE_COMPARATOR = new Comparator<Note>() {
         @Override
@@ -28,16 +32,18 @@ class ConcurrentNotesWidgetSizeCalculator {
     private final MusicalSymbolSizes symbolSizes;
     private final PositionsApartFromMiddleCCalculator positionCalculator;
 
-    ConcurrentNotesWidgetSizeCalculator(MusicalSymbolSizes symbolSizes, PositionsApartFromMiddleCCalculator positionCalculator) {
+    ConcurrentNotesWidgetCalculator(MusicalSymbolSizes symbolSizes, PositionsApartFromMiddleCCalculator positionCalculator) {
         this.symbolSizes = symbolSizes;
         this.positionCalculator = positionCalculator;
     }
 
-    Size size(Key key, ConcurrentNotes concurrentNotes) {
+    Output size(Key key, ConcurrentNotes concurrentNotes) {
         List<Note> notes = new ArrayList<>(concurrentNotes.notes());
         Collections.sort(notes, NOTE_COMPARATOR);
 
-        return Size.create(requiredWidth(notes), requiredHeight(key, notes));
+        Size widgetSize = Size.create(requiredWidth(notes), requiredHeight(key, notes));
+        int widgetTopToMiddleC = positionCalculator.positionsApartFromMiddleC(key, notes.get(0)) * symbolSizes.note.height();
+        return Output.create(widgetSize, widgetTopToMiddleC);
     }
 
     private int requiredWidth(List<Note> notes) {
@@ -66,6 +72,18 @@ class ConcurrentNotesWidgetSizeCalculator {
         int foo = (difference - 1) * symbolSizes.note.height();
         int bar = difference % 2 == 0 ? 0 : (int) (0.5 * symbolSizes.note.height());
         return foo + bar;
+    }
+
+    @AutoValue
+    static abstract class Output {
+
+        static Output create(Size widgetSize, @Px int widgetTopToMiddleC) {
+            return new AutoValue_ConcurrentNotesWidgetCalculator_Output(widgetSize, widgetTopToMiddleC);
+        }
+
+        abstract Size widgetSize();
+
+        abstract int widgetTopToMiddleC();
     }
 
 }
