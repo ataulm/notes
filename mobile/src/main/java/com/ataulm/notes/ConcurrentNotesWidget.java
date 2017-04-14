@@ -3,21 +3,25 @@ package com.ataulm.notes;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Px;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 public class ConcurrentNotesWidget extends View {
 
     private final PositionsApartFromMiddleCCalculator positionCalculator;
     private final MusicalSymbolSizes symbolSizes;
+    private final Drawable noteDrawable;
     private ConcurrentNotesWidgetCalculator.Output output;
 
     public ConcurrentNotesWidget(Context context) {
         super(context);
-        setBackgroundColor(Color.BLACK);
 
         positionCalculator = new PositionsApartFromMiddleCCalculator();
         symbolSizes = MusicalSymbolSizes.create();
+        noteDrawable = ContextCompat.getDrawable(context, R.drawable.vec_whole_note);
+        noteDrawable.setBounds(0, 0, symbolSizes.note.width(), symbolSizes.note.height());
     }
 
     @Override
@@ -39,7 +43,7 @@ public class ConcurrentNotesWidget extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        // TODO: draw
+        noteDrawable.draw(canvas);
     }
 
     @Px
