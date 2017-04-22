@@ -19,26 +19,26 @@ class MiddleCeeOffsetCalculator {
             return 0;
         }
 
-        String[] notes = CHROMATIC_SCALES_FROM_C.get(key);
         if (note.isHigherThan(MIDDLE_C)) {
-            return -calculateOffset(MIDDLE_C.midi(), note.midi(), notes);
+            return -calculateDifferenceBetween(MIDDLE_C, note, key);
         } else {
-            return calculateOffset(note.midi(), MIDDLE_C.midi(), notes);
+            return calculateDifferenceBetween(note, MIDDLE_C, key);
         }
     }
 
-    private int calculateOffset(int lowerPitch, int higherPitch, String[] notes) {
-        int positionsAway = 0;
+    private int calculateDifferenceBetween(Note lowerNote, Note higherNote, Key key) {
+        String[] chromaticScale = CHROMATIC_SCALES_FROM_C.get(key);
+        int difference = 0;
 
-        String last = notes[lowerPitch % notes.length];
-        for (int pitch = lowerPitch; pitch <= higherPitch; pitch++) {
-            String next = notes[pitch % notes.length];
+        String last = chromaticScale[lowerNote.midi() % chromaticScale.length];
+        for (int pitch = lowerNote.midi(); pitch <= higherNote.midi(); pitch++) {
+            String next = chromaticScale[pitch % chromaticScale.length];
             if (!next.startsWith(last.substring(0, 1))) {
-                positionsAway++;
+                difference++;
             }
             last = next;
         }
-        return positionsAway;
+        return difference;
     }
 
 }

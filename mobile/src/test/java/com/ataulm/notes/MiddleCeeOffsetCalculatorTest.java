@@ -29,7 +29,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class MiddleCeeOffsetCalculatorTest {
 
-    @Parameterized.Parameters(name = "Given {1} in Key {0}, expected expectedPositionFromMiddleC: {2}")
+    @Parameterized.Parameters(name = "Given {1} in Key {0}, expected offset: {2}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {Key.C_MAJ, C3, 7},
@@ -98,15 +98,15 @@ public class MiddleCeeOffsetCalculatorTest {
     public Note note;
 
     @Parameterized.Parameter(2)
-    public int expectedPositionFromMiddleC;
+    public int expectedOffset;
 
     MiddleCeeOffsetCalculator calculator = new MiddleCeeOffsetCalculator();
 
     @Test
-    public void positionFromMiddleC() {
+    public void calculateOffset() {
         int positionFromMiddleC = calculator.calculateOffset(key, note);
 
-        assertThat(positionFromMiddleC).isEqualTo(expectedPositionFromMiddleC);
+        assertThat(positionFromMiddleC).isEqualTo(expectedOffset);
     }
 
 }
