@@ -31,7 +31,7 @@ public class ConcurrentNotesWidgetHelperTest {
                 Size.create(FLAT_WIDTH, FLAT_HEIGHT),
                 Size.create(NATURAL_WIDTH, NATURAL_HEIGHT)
         );
-        calculator = new ConcurrentNotesWidgetHelper(symbolSizes, new PositionsApartFromMiddleCCalculator());
+        calculator = new ConcurrentNotesWidgetHelper(symbolSizes, new MiddleCeeOffsetCalculator());
     }
 
     @Test

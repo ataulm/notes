@@ -27,7 +27,7 @@ import static com.ataulm.notes.Fixtures.G_S4;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
-public class PositionsApartFromMiddleCCalculatorTest {
+public class MiddleCeeOffsetCalculatorTest {
 
     @Parameterized.Parameters(name = "Given {1} in Key {0}, expected expectedPositionFromMiddleC: {2}")
     public static Iterable<Object[]> data() {
@@ -100,11 +100,11 @@ public class PositionsApartFromMiddleCCalculatorTest {
     @Parameterized.Parameter(2)
     public int expectedPositionFromMiddleC;
 
-    PositionsApartFromMiddleCCalculator calculator = new PositionsApartFromMiddleCCalculator();
+    MiddleCeeOffsetCalculator calculator = new MiddleCeeOffsetCalculator();
 
     @Test
     public void positionFromMiddleC() {
-        int positionFromMiddleC = calculator.positionsApartFromMiddleC(key, note);
+        int positionFromMiddleC = calculator.calculateOffset(key, note);
 
         assertThat(positionFromMiddleC).isEqualTo(expectedPositionFromMiddleC);
     }

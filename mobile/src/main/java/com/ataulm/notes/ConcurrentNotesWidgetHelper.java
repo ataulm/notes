@@ -30,9 +30,9 @@ class ConcurrentNotesWidgetHelper {
     };
 
     private final MusicalSymbolSizes symbolSizes;
-    private final PositionsApartFromMiddleCCalculator positionCalculator;
+    private final MiddleCeeOffsetCalculator positionCalculator;
 
-    ConcurrentNotesWidgetHelper(MusicalSymbolSizes symbolSizes, PositionsApartFromMiddleCCalculator positionCalculator) {
+    ConcurrentNotesWidgetHelper(MusicalSymbolSizes symbolSizes, MiddleCeeOffsetCalculator positionCalculator) {
         this.symbolSizes = symbolSizes;
         this.positionCalculator = positionCalculator;
     }
@@ -42,13 +42,13 @@ class ConcurrentNotesWidgetHelper {
         Collections.sort(notes, NOTE_COMPARATOR);
 
         Size widgetSize = Size.create(requiredWidth(notes), requiredHeight(key, notes));
-        int topPositionsApart = positionCalculator.positionsApartFromMiddleC(key, notes.get(0));
+        int topPositionsApart = positionCalculator.calculateOffset(key, notes.get(0));
         int widgetTopToMiddleC = (int) (0.5 * topPositionsApart * symbolSizes.note.height() - (symbolSizes.note.height() * .5));
 
         List<Position> notePositions = new ArrayList<>();
 
         for (Note note : concurrentNotes.notes()) {
-            int positionsApart = positionCalculator.positionsApartFromMiddleC(key, note);
+            int positionsApart = positionCalculator.calculateOffset(key, note);
             int relativePositionsApart = positionsApart - topPositionsApart;
             notePositions.add(Position.create(0, (int) (-1 * relativePositionsApart * symbolSizes.note.height() * .5)));
         }
@@ -94,8 +94,8 @@ class ConcurrentNotesWidgetHelper {
             return symbolSizes.note.height();
         }
 
-        int firstNotePosition = positionCalculator.positionsApartFromMiddleC(key, notes.get(0));
-        int lastNotePosition = positionCalculator.positionsApartFromMiddleC(key, notes.get(notes.size() - 1));
+        int firstNotePosition = positionCalculator.calculateOffset(key, notes.get(0));
+        int lastNotePosition = positionCalculator.calculateOffset(key, notes.get(notes.size() - 1));
         int difference = Math.abs(lastNotePosition - firstNotePosition);
 
         int foo = (difference - 1) * symbolSizes.note.height();

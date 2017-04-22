@@ -10,7 +10,7 @@ import android.view.View;
 
 public class ConcurrentNotesWidget extends View {
 
-    private final PositionsApartFromMiddleCCalculator positionCalculator;
+    private final MiddleCeeOffsetCalculator positionCalculator;
     private final MusicalSymbolSizes symbolSizes;
     private final Drawable noteDrawable;
     private ConcurrentNotesWidgetHelper.Output output;
@@ -19,7 +19,7 @@ public class ConcurrentNotesWidget extends View {
         super(context);
 
         setBackgroundColor(Color.YELLOW);
-        positionCalculator = new PositionsApartFromMiddleCCalculator();
+        positionCalculator = new MiddleCeeOffsetCalculator();
         symbolSizes = MusicalSymbolSizes.create();
         noteDrawable = ContextCompat.getDrawable(context, R.drawable.vec_whole_note);
         noteDrawable.setBounds(0, 0, symbolSizes.note.width(), symbolSizes.note.height());
