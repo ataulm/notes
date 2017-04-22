@@ -13,11 +13,12 @@ public class ConcurrentNotesWidget extends View {
     private final PositionsApartFromMiddleCCalculator positionCalculator;
     private final MusicalSymbolSizes symbolSizes;
     private final Drawable noteDrawable;
-    private ConcurrentNotesWidgetCalculator.Output output;
+    private ConcurrentNotesWidgetHelper.Output output;
 
     public ConcurrentNotesWidget(Context context) {
         super(context);
 
+        setBackgroundColor(Color.YELLOW);
         positionCalculator = new PositionsApartFromMiddleCCalculator();
         symbolSizes = MusicalSymbolSizes.create();
         noteDrawable = ContextCompat.getDrawable(context, R.drawable.vec_whole_note);
@@ -30,20 +31,20 @@ public class ConcurrentNotesWidget extends View {
     }
 
     void bind(Key key, ConcurrentNotes notes) {
-        this.notes = notes;
-
-
-        ConcurrentNotesWidgetCalculator calculator = new ConcurrentNotesWidgetCalculator(symbolSizes, positionCalculator);
+        ConcurrentNotesWidgetHelper calculator = new ConcurrentNotesWidgetHelper(symbolSizes, positionCalculator);
         output = calculator.size(key, notes);
         requestLayout();
     }
 
-    ConcurrentNotes notes;
-
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        noteDrawable.draw(canvas);
+        for (Position position : output.notes()) {
+            int count = canvas.save();
+            canvas.translate(position.x(), position.y());
+            noteDrawable.draw(canvas);
+            canvas.restoreToCount(count);
+        }
     }
 
     @Px

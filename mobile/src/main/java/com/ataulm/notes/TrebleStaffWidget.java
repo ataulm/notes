@@ -8,6 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -20,6 +24,7 @@ public class TrebleStaffWidget extends FrameLayout {
     private static final int WINDOW_SIZE = 4;
 
     private final Paint paint;
+    private final Paint red;
     private final Drawable trebleClefDrawable;
     private final TrebleStaffSizer trebleStaffSizer = TrebleStaffSizer.create();
 
@@ -35,6 +40,9 @@ public class TrebleStaffWidget extends FrameLayout {
 
         paint = new Paint();
         paint.setColor(Color.BLACK);
+
+        red = new Paint();
+        red.setColor(Color.RED);
     }
 
     @Override
@@ -79,6 +87,8 @@ public class TrebleStaffWidget extends FrameLayout {
             ConcurrentNotesWidget child = (ConcurrentNotesWidget) getChildAt(i);
             int childLeft = 60 + i * 20;
             int childTop = middleCY + child.topToMiddleC();
+
+            Log.d("!!!", "onLayout: childTop topToMiddleC: " + child.topToMiddleC());
             child.layout(childLeft, childTop, childLeft + child.getMeasuredWidth(), childTop + child.getMeasuredHeight());
         }
     }
@@ -86,11 +96,11 @@ public class TrebleStaffWidget extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int restoreCount = canvas.save();
+        int saveCount = canvas.save();
         Position clefPosition = trebleStaffSizer.clefPosition();
         canvas.translate(clefPosition.x(), clefPosition.y());
         trebleClefDrawable.draw(canvas);
-        canvas.restoreToCount(restoreCount);
+        canvas.restoreToCount(saveCount);
         drawStaff(canvas);
     }
 
@@ -105,8 +115,13 @@ public class TrebleStaffWidget extends FrameLayout {
             canvas.drawLine(lineStartX, lineY, lineEndX, lineY, paint);
         }
 
+        int lastLineY = trebleStaffSizer.linesY()[trebleStaffSizer.linesY().length - 1];
+        canvas.drawLine(lineStartX, lastLineY + noteHeight, lineEndX, lastLineY + noteHeight, red);
+
         canvas.drawLine(lineStartX, 5 * noteHeight, lineStartX, 9 * noteHeight, paint);
         canvas.drawLine(lineEndX, 5 * noteHeight, lineEndX, 9 * noteHeight, paint);
     }
+
+
 
 }

@@ -10,6 +10,15 @@ class SongFactory {
     private static final ConcurrentNotes G = ConcurrentNotes.create(Fixtures.G4, Fixtures.B4, Fixtures.D5);
     private static final ConcurrentNotes C_2ND_INV = ConcurrentNotes.create(Fixtures.G4, Fixtures.C5, Fixtures.E5);
 
+    static Sequence test() {
+        return Sequence.create(
+//                ConcurrentNotes.create(Note.create(60), Note.create(64), Note.create(67)),
+//                ConcurrentNotes.create(Note.create(60)),
+                ConcurrentNotes.create(Note.create(60), Note.create(57))//, Note.create(52))
+//                ConcurrentNotes.create(Note.create(59))
+        );
+    }
+
     static Sequence pachelbelsCanon() {
         return Sequence.create(
                 C_2ND_INV, G, AM_2ND_INV, EM,
