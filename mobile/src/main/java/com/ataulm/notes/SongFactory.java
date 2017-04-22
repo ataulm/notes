@@ -12,10 +12,10 @@ class SongFactory {
 
     static Sequence test() {
         return Sequence.create(
-//                ConcurrentNotes.create(Note.create(60), Note.create(64), Note.create(67)),
-//                ConcurrentNotes.create(Note.create(60)),
-                ConcurrentNotes.create(Note.create(60), Note.create(57))//, Note.create(52))
-//                ConcurrentNotes.create(Note.create(59))
+                ConcurrentNotes.create(Note.create(60), Note.create(64), Note.create(67)),
+                ConcurrentNotes.create(Note.create(60)),
+                ConcurrentNotes.create(Note.create(60), Note.create(57), Note.create(52)),
+                ConcurrentNotes.create(Note.create(59))
         );
     }
 
