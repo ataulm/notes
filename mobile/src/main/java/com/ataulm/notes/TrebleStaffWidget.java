@@ -9,9 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -26,7 +23,7 @@ public class TrebleStaffWidget extends FrameLayout {
     private final Paint paint;
     private final Paint red;
     private final Drawable trebleClefDrawable;
-    private final TrebleStaffSizer trebleStaffSizer = TrebleStaffSizer.create();
+    private final TrebleStaffSizer trebleStaffSizer;
 
     private Key key = Key.C_MAJ;
 
@@ -34,6 +31,7 @@ public class TrebleStaffWidget extends FrameLayout {
         super(context, attrs);
         setWillNotDraw(false);
 
+        trebleStaffSizer = new TrebleStaffSizer(MusicalSymbolSizes.create(context.getResources()));
         trebleClefDrawable = ContextCompat.getDrawable(context, R.drawable.vec_treble_clef);
         Size trebleClefSize = trebleStaffSizer.clefSize();
         trebleClefDrawable.setBounds(0, 0, trebleClefSize.width(), trebleClefSize.height());
@@ -121,7 +119,6 @@ public class TrebleStaffWidget extends FrameLayout {
         canvas.drawLine(lineStartX, 5 * noteHeight, lineStartX, 9 * noteHeight, paint);
         canvas.drawLine(lineEndX, 5 * noteHeight, lineEndX, 9 * noteHeight, paint);
     }
-
 
 
 }

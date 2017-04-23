@@ -1,5 +1,7 @@
 package com.ataulm.notes;
 
+import android.content.res.Resources;
+
 class MusicalSymbolSizes {
 
     final Size note;
@@ -7,14 +9,12 @@ class MusicalSymbolSizes {
     final Size flat;
     final Size natural;
 
-    static MusicalSymbolSizes create() {
-        // these should be fixed based on the symbol sizes which are known at compile time
-        // users should not create with whatever parameters they choose - this should be fixed, systemwide
+    static MusicalSymbolSizes create(Resources resources) {
         return new MusicalSymbolSizes(
-                Size.create(16, 10),
-                Size.create(10, 10),
-                Size.create(10, 10),
-                Size.create(10, 10)
+                Size.create(resources.getDimensionPixelSize(R.dimen.note_width), resources.getDimensionPixelSize(R.dimen.note_height)),
+                Size.create(resources.getDimensionPixelSize(R.dimen.sharp_width), resources.getDimensionPixelSize(R.dimen.sharp_height)),
+                Size.create(resources.getDimensionPixelSize(R.dimen.flat_width), resources.getDimensionPixelSize(R.dimen.flat_height)),
+                Size.create(resources.getDimensionPixelSize(R.dimen.natural_width), resources.getDimensionPixelSize(R.dimen.natural_height))
         );
     }
 

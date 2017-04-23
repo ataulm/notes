@@ -37,11 +37,6 @@ class TrebleStaffSizer {
 
     private final MusicalSymbolSizes musicalSymbolSizes;
 
-    static TrebleStaffSizer create() {
-        MusicalSymbolSizes musicalSymbolSizes = MusicalSymbolSizes.create();
-        return new TrebleStaffSizer(musicalSymbolSizes);
-    }
-
     TrebleStaffSizer(MusicalSymbolSizes musicalSymbolSizes) {
         this.musicalSymbolSizes = musicalSymbolSizes;
     }

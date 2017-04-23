@@ -20,7 +20,7 @@ public class ConcurrentNotesWidget extends View {
 
         setBackgroundColor(Color.YELLOW);
         positionCalculator = new MiddleCeeOffsetCalculator();
-        symbolSizes = MusicalSymbolSizes.create();
+        symbolSizes = MusicalSymbolSizes.create(getResources());
         noteDrawable = ContextCompat.getDrawable(context, R.drawable.vec_whole_note);
         noteDrawable.setBounds(0, 0, symbolSizes.note.width(), symbolSizes.note.height());
     }
