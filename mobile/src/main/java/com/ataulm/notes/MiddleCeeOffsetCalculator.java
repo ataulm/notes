@@ -1,18 +1,8 @@
 package com.ataulm.notes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 class MiddleCeeOffsetCalculator {
 
-    private static final Map<Key, String[]> CHROMATIC_SCALES_FROM_C = new HashMap<>();
     private static final Note MIDDLE_C = Note.create(60);
-
-    static {
-        CHROMATIC_SCALES_FROM_C.put(Key.C_MAJ, new String[]{"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"});
-        CHROMATIC_SCALES_FROM_C.put(Key.G_MAJ, new String[]{"C", "C♯", "D", "D♯", "E", "F♮", "F", "G", "G♯", "A", "A♯", "B"});
-        CHROMATIC_SCALES_FROM_C.put(Key.F_MAJ, new String[]{"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "B", "B♮"});
-    }
 
     int calculateOffset(Key key, Note note) {
         if (MIDDLE_C.equals(note)) {
@@ -27,7 +17,7 @@ class MiddleCeeOffsetCalculator {
     }
 
     private int calculateDifferenceBetween(Note lowerNote, Note higherNote, Key key) {
-        String[] chromaticScale = CHROMATIC_SCALES_FROM_C.get(key);
+        String[] chromaticScale = ChromaticScales.BY_KEY.get(key);
         int difference = 0;
 
         String last = chromaticScale[lowerNote.midi() % chromaticScale.length];
