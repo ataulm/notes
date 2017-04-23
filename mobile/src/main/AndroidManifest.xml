@@ -8,7 +8,6 @@
     android:theme="@style/AppTheme">
 
     <activity android:name=".VirtualPianoActivity" />
-    <activity android:name=".legacy.MyActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="notes_initial_offset_left_for_clef_mark">80dp</dimen>
-  <dimen name="space_between_notes">20dp</dimen>
-  <dimen name="notes_initial_offset_top_to_middle_c">70dp</dimen>
-  <dimen name="step_offset">5dp</dimen>
+
+    <dimen name="note_width">16sp</dimen>
+    <dimen name="note_height">10sp</dimen>
+    <dimen name="sharp_width">9sp</dimen>
+    <dimen name="sharp_height">28sp</dimen>
+    <dimen name="flat_width">9sp</dimen>
+    <dimen name="flat_height">24sp</dimen>
+    <dimen name="natural_width">7sp</dimen>
+    <dimen name="natural_height">28sp</dimen>
+
 </resources>
