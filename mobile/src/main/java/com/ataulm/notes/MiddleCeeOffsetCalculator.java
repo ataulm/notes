@@ -17,12 +17,12 @@ class MiddleCeeOffsetCalculator {
     }
 
     private int calculateDifferenceBetween(Note lowerNote, Note higherNote, Key key) {
-        String[] chromaticScale = ChromaticScales.BY_KEY.get(key);
+        String[] scale = ChromaticScales.BY_KEY.get(key);
         int difference = 0;
 
-        String last = chromaticScale[lowerNote.midi() % chromaticScale.length];
+        String last = scale[lowerNote.midi() % scale.length];
         for (int pitch = lowerNote.midi(); pitch <= higherNote.midi(); pitch++) {
-            String next = chromaticScale[pitch % chromaticScale.length];
+            String next = scale[pitch % scale.length];
             if (!next.startsWith(last.substring(0, 1))) {
                 difference++;
             }
