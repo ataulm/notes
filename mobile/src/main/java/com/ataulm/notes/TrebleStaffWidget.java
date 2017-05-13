@@ -83,10 +83,10 @@ public class TrebleStaffWidget extends FrameLayout {
 
         for (int i = 0; i < getChildCount(); i++) {
             ConcurrentNotesWidget child = (ConcurrentNotesWidget) getChildAt(i);
-            int childLeft = 60 + i * 20;
-            int childTop = middleCY + child.topToMiddleC();
+            int childLeft = 60 + i * 75;
+            int childTop = middleCY + child.topToMiddleCee();
 
-            Log.d("!!!", "onLayout: childTop topToMiddleC: " + child.topToMiddleC());
+            Log.d("!!!", "onLayout: childTop topToMiddleCee: " + child.topToMiddleCee());
             child.layout(childLeft, childTop, childLeft + child.getMeasuredWidth(), childTop + child.getMeasuredHeight());
         }
     }

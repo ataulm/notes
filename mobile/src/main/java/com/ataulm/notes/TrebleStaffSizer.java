@@ -73,13 +73,4 @@ class TrebleStaffSizer {
         return 14 * musicalSymbolSizes.note.height();
     }
 
-    Position staffLineTop() {
-        int noteHeight = musicalSymbolSizes.note.height();
-        return Position.create(noteHeight, 5 * noteHeight);
-    }
-
-    Position staffStartLineBottom() {
-        int noteHeight = musicalSymbolSizes.note.height();
-        return Position.create(noteHeight, 9 * noteHeight);
-    }
 }

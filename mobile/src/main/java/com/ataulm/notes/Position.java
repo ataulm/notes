@@ -11,8 +11,10 @@ abstract class Position {
         return new AutoValue_Position(x, y);
     }
 
+    @Px
     abstract int x();
 
+    @Px
     abstract int y();
 
 }
