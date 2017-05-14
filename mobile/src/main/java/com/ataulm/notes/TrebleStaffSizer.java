@@ -55,12 +55,22 @@ class TrebleStaffSizer {
     int[] linesY() {
         int noteHeight = musicalSymbolSizes.note.height();
         return new int[]{
-                5 * noteHeight,
+                topLine(),
                 6 * noteHeight,
                 7 * noteHeight,
                 8 * noteHeight,
-                9 * noteHeight
+                bottomLine(),
         };
+    }
+
+    int topLine() {
+        int noteHeight = musicalSymbolSizes.note.height();
+        return 5 * noteHeight;
+    }
+
+    int bottomLine() {
+        int noteHeight = musicalSymbolSizes.note.height();
+        return 9 * noteHeight;
     }
 
     int middleCY() {

@@ -1,6 +1,7 @@
 package com.ataulm.notes;
 
 import static com.ataulm.notes.Fixtures.A4;
+import static com.ataulm.notes.Fixtures.A_S5;
 import static com.ataulm.notes.Fixtures.B4;
 import static com.ataulm.notes.Fixtures.C4;
 import static com.ataulm.notes.Fixtures.C5;
@@ -25,7 +26,7 @@ class SongFactory {
 
     static Sequence test() {
         return Sequence.create(
-                ConcurrentNotes.create(F_S4),
+                ConcurrentNotes.create(F_S4, A_S5),
                 ConcurrentNotes.create(F_S4, C5, D5),
                 ConcurrentNotes.create(G4, C5, E5),
                 ConcurrentNotes.create(C4, F_S4, G_S4)

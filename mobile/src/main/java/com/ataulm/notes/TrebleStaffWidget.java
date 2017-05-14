@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class TrebleStaffWidget extends FrameLayout {
     private final Paint red;
     private final Drawable trebleClefDrawable;
     private final TrebleStaffSizer trebleStaffSizer;
+    private final MusicalSymbolSizes symbolSizes;
 
     private Key key = Key.C_MAJ;
 
@@ -41,6 +42,7 @@ public class TrebleStaffWidget extends FrameLayout {
 
         red = new Paint();
         red.setColor(Color.RED);
+        symbolSizes = MusicalSymbolSizes.create(context.getResources());
     }
 
     @Override
@@ -99,21 +101,50 @@ public class TrebleStaffWidget extends FrameLayout {
         trebleClefDrawable.draw(canvas);
         canvas.restoreToCount(saveCount);
         drawStaff(canvas);
+
+        int trebleStaffTop = trebleStaffSizer.topLine();
+        int trebleStaffBottom = trebleStaffSizer.bottomLine();
+        for (int i = 0; i < getChildCount(); i++) {
+            View notesWidget = getChildAt(i);
+            drawLedgerLinesAboveStaff(canvas, notesWidget.getLeft(), notesWidget.getTop(), notesWidget.getRight(), trebleStaffTop);
+            drawLedgerLinesBeneathStaff(canvas, notesWidget.getLeft(), trebleStaffBottom, notesWidget.getRight(), notesWidget.getBottom());
+        }
+    }
+
+    private void drawLedgerLinesAboveStaff(Canvas canvas, int left, int childTop, int right, int staffTopLine) {
+        if (staffTopLine < childTop) {
+            return;
+        }
+        float spacing =  symbolSizes.note.height();
+        float currentY = staffTopLine;
+        while (currentY > childTop) {
+            currentY -= spacing;
+            canvas.drawLine(left, currentY, right, currentY, paint);
+        }
+    }
+
+    private void drawLedgerLinesBeneathStaff(Canvas canvas, int left, int staffBottomLine, int right, int childBottom) {
+        if (childBottom < staffBottomLine) {
+            return;
+        }
+        float spacing =  symbolSizes.note.height();
+        float currentY = staffBottomLine;
+        while (currentY < childBottom) {
+            currentY += spacing;
+            canvas.drawLine(left, currentY, right, currentY, paint);
+        }
     }
 
     private void drawStaff(Canvas canvas) {
         int viewWidth = getWidth();
 
-        int noteHeight = 10;
+        int noteHeight = symbolSizes.note.height();
         int lineStartX = noteHeight;
         int lineEndX = viewWidth - lineStartX;
 
         for (int lineY : trebleStaffSizer.linesY()) {
             canvas.drawLine(lineStartX, lineY, lineEndX, lineY, paint);
         }
-
-        int lastLineY = trebleStaffSizer.linesY()[trebleStaffSizer.linesY().length - 1];
-        canvas.drawLine(lineStartX, lastLineY + noteHeight, lineEndX, lastLineY + noteHeight, red);
 
         canvas.drawLine(lineStartX, 5 * noteHeight, lineStartX, 9 * noteHeight, paint);
         canvas.drawLine(lineEndX, 5 * noteHeight, lineEndX, 9 * noteHeight, paint);
