@@ -25,7 +25,6 @@ public class ConcurrentNotesWidget extends View {
     public ConcurrentNotesWidget(Context context) {
         super(context);
 
-        super.setBackgroundColor(Color.GREEN);
         MiddleCeeOffsetCalculator offsetCalculator = new MiddleCeeOffsetCalculator();
         symbolSizes = MusicalSymbolSizes.create(getResources());
 
