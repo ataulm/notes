@@ -86,7 +86,6 @@ public class TrebleStaffWidget extends FrameLayout {
             int childLeft = 60 + i * 75;
             int childTop = middleCY + child.topToMiddleCee();
 
-            Log.d("!!!", "onLayout: childTop topToMiddleCee: " + child.topToMiddleCee());
             child.layout(childLeft, childTop, childLeft + child.getMeasuredWidth(), childTop + child.getMeasuredHeight());
         }
     }
@@ -119,6 +118,5 @@ public class TrebleStaffWidget extends FrameLayout {
         canvas.drawLine(lineStartX, 5 * noteHeight, lineStartX, 9 * noteHeight, paint);
         canvas.drawLine(lineEndX, 5 * noteHeight, lineEndX, 9 * noteHeight, paint);
     }
-
 
 }
