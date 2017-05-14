@@ -52,7 +52,7 @@ public class ConcurrentNotesSizerTest {
     public void setUp() {
         MusicalSymbolSizes sizes = new MusicalSymbolSizes(NOTE_SIZE, ACCIDENTAL_SIZE, ACCIDENTAL_SIZE, ACCIDENTAL_SIZE);
         ConcurrentNotesPositionCalculator concurrentNotesPositionCalculator = new ConcurrentNotesPositionCalculator(sizes, new MiddleCeeOffsetCalculator());
-        positionedMarks = concurrentNotesPositionCalculator.calculatePositions(key, notes); // lol nice unit test
+        positionedMarks = concurrentNotesPositionCalculator.calculatePositions(key, notes).marks(); // lol nice unit test
         sizer = new ConcurrentNotesSizer(sizes);
     }
 

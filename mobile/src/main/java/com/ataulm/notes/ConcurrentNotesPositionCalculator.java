@@ -44,10 +44,49 @@ class ConcurrentNotesPositionCalculator {
         this.offsetCalculator = offsetCalculator;
     }
 
-    List<PositionedMark> calculatePositions(Key key, ConcurrentNotes concurrentNotes) {
+    ConcurrentNotesMarks calculatePositions(Key key, ConcurrentNotes concurrentNotes) {
         List<Note> sortedNotes = new ArrayList<>(concurrentNotes.notes());
         Collections.sort(sortedNotes, HIGH_TO_LOW_COMPARATOR);
-        return positionedMarks(key, sortedNotes);
+
+
+        List<PositionedMark> positionedMarks = positionedMarks(key, sortedNotes);
+        Optional<Stem> stem = stem(positionedMarks);
+
+        return ConcurrentNotesMarks.create(positionedMarks, stem);
+    }
+
+    private Optional<Stem> stem(List<PositionedMark> positionedMarks) {
+        Position highestNote = null;
+        Position lowestNote = null;
+        for (PositionedMark positionedMark : positionedMarks) {
+            if (positionedMark.mark() == NOTE) {
+                if (highestNote == null || positionedMark.center().y() < highestNote.y()) {
+                    highestNote = positionedMark.center();
+                }
+
+                if (lowestNote == null || positionedMark.center().y() > lowestNote.y()) {
+                    lowestNote = positionedMark.center();
+                }
+            }
+        }
+        if (highestNote.equals(lowestNote)) {
+            return Optional.absent();
+        } else {
+            int highestX = highestNote.x();
+            int lowestX = lowestNote.x();
+            int desiredX;
+            if (highestX == lowestX) {
+                desiredX = (int) (highestX + (width(NOTE) * 0.5)) - 1;
+            } else {
+                desiredX = (int) ((lowestX + highestX) * 0.5);
+            }
+            return Optional.of(
+                    Stem.create(
+                            Position.create(desiredX, highestNote.y()),
+                            Position.create(desiredX, lowestNote.y())
+                    )
+            );
+        }
     }
 
     @Px

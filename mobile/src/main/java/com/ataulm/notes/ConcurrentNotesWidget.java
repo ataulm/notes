@@ -3,12 +3,13 @@ package com.ataulm.notes;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Px;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import java.util.List;
+import com.ataulm.Optional;
 
 public class ConcurrentNotesWidget extends View {
 
@@ -18,12 +19,17 @@ public class ConcurrentNotesWidget extends View {
     private final ConcurrentNotesPositionCalculator positionCalculator;
     private final ConcurrentNotesSizer notesSizer;
     private final MusicalSymbolSizes symbolSizes;
+    private final Paint stemPaint;
 
-    private List<PositionedMark> positionedMarks;
+    private ConcurrentNotesMarks positionedMarks;
     private int topToMiddleCee;
 
     public ConcurrentNotesWidget(Context context) {
         super(context);
+
+        stemPaint = new Paint();
+        stemPaint.setColor(Color.BLACK);
+        stemPaint.setStrokeWidth(2);
 
         MiddleCeeOffsetCalculator offsetCalculator = new MiddleCeeOffsetCalculator();
         symbolSizes = MusicalSymbolSizes.create(getResources());
@@ -52,14 +58,20 @@ public class ConcurrentNotesWidget extends View {
         if (positionedMarks == null) {
             throw new IllegalStateException("should bind notes before adding this view");
         }
-        Size size = notesSizer.size(positionedMarks);
+        Size size = notesSizer.size(positionedMarks.marks());
         setMeasuredDimension(size.width(), size.height());
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        for (PositionedMark positionedMark : positionedMarks) {
+        Optional<Stem> stemOptional = positionedMarks.stem();
+        if (stemOptional.isPresent()) {
+            Stem stem = stemOptional.get();
+            canvas.drawLine(stem.start().x(), stem.start().y(), stem.end().x(), stem.end().y(), stemPaint);
+        }
+
+        for (PositionedMark positionedMark : positionedMarks.marks()) {
             Mark mark = positionedMark.mark();
             Drawable drawable = getDrawableFor(mark);
             int count = canvas.save();
