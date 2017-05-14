@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.ataulm.notes.Mark.NATURAL;
+import static com.ataulm.notes.Mark.NOTE;
+import static com.ataulm.notes.Mark.SHARP;
+
 class ConcurrentNotesPositionCalculator {
 
-    private static final int NUMBER_OF_COLUMNS_ROUGH_X_POSITIONS_ACCIDENTAL = 2;
-    private static final int ACCIDENTAL_SECONDARY = 0;
-    private static final int ACCIDENTAL_PRIMARY = 1;
     private static final int NUMBER_OF_COLUMNS_ROUGH_X_POSITIONS_NOTES = 2;
     private static final int NOTE_PRIMARY = 0;
     private static final int NOTE_SECONDARY = 1;
@@ -33,6 +34,7 @@ class ConcurrentNotesPositionCalculator {
             }
         }
     };
+    private static final int SPACES_BETWEEN_NON_OVERLAPPING_ACCIDENTALS = 7;
 
     private final MusicalSymbolSizes symbolSizes;
     private final MiddleCeeOffsetCalculator offsetCalculator;
@@ -53,8 +55,10 @@ class ConcurrentNotesPositionCalculator {
         List<Note> sortedNotes = new ArrayList<>(concurrentNotes.notes());
         Collections.sort(sortedNotes, HIGH_TO_LOW_COMPARATOR);
 
+        int yOffset = calculateYOffset(key, sortedNotes.get(0));
+
         int topNoteOffset = offsetCalculator.calculateOffset(key, sortedNotes.get(0));
-        return deltaGivenOffset(topNoteOffset) - symbolSizes.note.height();
+        return deltaGivenOffset(topNoteOffset) - symbolSizes.note.height() - yOffset;
     }
 
     private List<PositionedMark> positionedMarks(Key key, List<Note> sortedNotes) {
@@ -104,7 +108,8 @@ class ConcurrentNotesPositionCalculator {
         }
 
         ArrayList<Integer> yPositions = new ArrayList<>();
-        int highestMiddleCeeOffset = offsetCalculator.calculateOffset(key, sortedNotes.get(0));
+        Note firstNote = sortedNotes.get(0);
+        int highestMiddleCeeOffset = offsetCalculator.calculateOffset(key, firstNote);
         for (int i = 0; i < sortedNotes.size(); i++) {
             Note note = sortedNotes.get(i);
             int y = calculateYPosition(key, note, highestMiddleCeeOffset);
@@ -115,12 +120,23 @@ class ConcurrentNotesPositionCalculator {
             }
         }
 
+        int yOffset = calculateYOffset(key, firstNote);
         for (int i = 0; i < positionedMarks.size(); i++) {
             PositionedMark positionedMark = positionedMarks.get(i);
-            positionedMarks.set(i, positionedMark.y(yPositions.get(i)));
+            positionedMarks.set(i, positionedMark.y(yPositions.get(i) + yOffset));
         }
 
         return positionedMarks;
+    }
+
+    private int calculateYOffset(Key key, Note firstNote) {
+        Optional<Accidental> accidental = ChromaticScales.accidental(key, firstNote);
+        int yOffset = 0;
+        if (accidental.isPresent()) {
+            Mark mark = accidental.get() == Accidental.NATURAL ? NATURAL : SHARP;
+            yOffset = (int) ((height(mark) - height(NOTE)) * 0.5);
+        }
+        return yOffset;
     }
 
     private Mark[][] calculateRoughXPositions(Key key, List<Note> sortedNotes) {
@@ -148,37 +164,50 @@ class ConcurrentNotesPositionCalculator {
         return joined;
     }
 
+    private Optional<Integer> closestOverlappingAccidental(Map<Integer, Integer> accidentalPositions, int nextAccidental) {
+        for (int i = 1; i < SPACES_BETWEEN_NON_OVERLAPPING_ACCIDENTALS; i++) {
+            int overlappingAccidental = nextAccidental - i;
+            Integer integer = accidentalPositions.get(overlappingAccidental);
+            if (integer != null) {
+                return Optional.of(overlappingAccidental);
+            }
+        }
+        return Optional.absent();
+    }
+
     private Mark[][] calculateRoughXPositionsForAccidentals(Mark[][] roughXPositionsForNotes, Key key, List<Note> sortedNotes) {
         if (roughXPositionsForNotes.length != sortedNotes.size()) {
             throw new IllegalStateException("invalid Mark[][] for notes");
         }
 
-        Mark[][] positionsArray = new Mark[sortedNotes.size()][NUMBER_OF_COLUMNS_ROUGH_X_POSITIONS_ACCIDENTAL];
-        if (sortedNotes.size() == 1) {
-            Optional<Accidental> accidental = ChromaticScales.accidental(key, sortedNotes.get(0));
-            if (accidental.isPresent()) {
-                positionsArray[0][ACCIDENTAL_PRIMARY] = accidental.get() == Accidental.NATURAL ? Mark.NATURAL : Mark.SHARP;
-            }
-            return positionsArray;
-        }
-
+        Map<Integer, Integer> accidentalPositions = new HashMap<>();
         for (int i = 0; i < sortedNotes.size(); i++) {
-            Optional<Accidental> accidental = ChromaticScales.accidental(key, sortedNotes.get(i));
+            Note note = sortedNotes.get(i);
+            Optional<Accidental> accidental = ChromaticScales.accidental(key, note);
             if (accidental.isPresent()) {
-                Mark accidentalValue = accidental.get() == Accidental.NATURAL ? Mark.NATURAL : Mark.SHARP;
-
-                if (roughXPositionsForNotes[i][NOTE_SECONDARY] != null) {
-                    positionsArray[i][ACCIDENTAL_PRIMARY] = accidentalValue;
+                Optional<Integer> closestOverlappingAccidental = closestOverlappingAccidental(accidentalPositions, i);
+                if (closestOverlappingAccidental.isPresent()) {
+                    int roughXPositionClosestOverlappingAccidental = accidentalPositions.get(closestOverlappingAccidental.get());
+                    accidentalPositions.put(i, roughXPositionClosestOverlappingAccidental + 1);
                 } else {
-                    if (i == 0) {
-                        positionsArray[i][ACCIDENTAL_PRIMARY] = accidentalValue;
-                    } else if (positionsArray[i - 1][ACCIDENTAL_PRIMARY] != null) {
-                        positionsArray[i][ACCIDENTAL_SECONDARY] = accidentalValue;
-                    } else {
-                        positionsArray[i][ACCIDENTAL_PRIMARY] = accidentalValue;
-                    }
+                    accidentalPositions.put(i, 0);
                 }
             }
+        }
+
+        int highestColumnIndex = 0;
+        for (int roughXPosition : accidentalPositions.values()) {
+            if (roughXPosition > highestColumnIndex) {
+                highestColumnIndex = roughXPosition;
+            }
+        }
+
+        Mark[][] positionsArray = new Mark[sortedNotes.size()][highestColumnIndex + 1];
+        for (Map.Entry<Integer, Integer> accidentalPosition : accidentalPositions.entrySet()) {
+            int row = accidentalPosition.getKey();
+            Optional<Accidental> accidental = ChromaticScales.accidental(key, sortedNotes.get(row));
+            Mark mark = accidental.get() == Accidental.NATURAL ? NATURAL : Mark.SHARP;
+            positionsArray[row][accidentalPosition.getValue()] = mark;
         }
 
         return positionsArray;
@@ -238,6 +267,19 @@ class ConcurrentNotesPositionCalculator {
                 return symbolSizes.note.width();
             default:
                 throw new IllegalArgumentException("dunno width for mark: " + mark);
+        }
+    }
+
+    private int height(Mark mark) {
+        switch (mark) {
+            case NATURAL:
+                return symbolSizes.natural.height();
+            case SHARP:
+                return symbolSizes.sharp.height();
+            case NOTE:
+                return symbolSizes.note.height();
+            default:
+                throw new IllegalArgumentException("dunno height for mark: " + mark);
         }
     }
 

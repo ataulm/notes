@@ -2,6 +2,7 @@ package com.ataulm.notes;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Px;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,7 @@ public class ConcurrentNotesWidget extends View {
     public ConcurrentNotesWidget(Context context) {
         super(context);
 
+        super.setBackgroundColor(Color.GREEN);
         MiddleCeeOffsetCalculator offsetCalculator = new MiddleCeeOffsetCalculator();
         symbolSizes = MusicalSymbolSizes.create(getResources());
 
