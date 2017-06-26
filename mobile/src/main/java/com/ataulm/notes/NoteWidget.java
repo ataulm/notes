@@ -50,15 +50,23 @@ public abstract class NoteWidget extends View {
         sizes = MusicalSymbolSizes.create(context.getResources());
     }
 
+    public abstract float noteCenterY();
+
 }
 
 class Simple extends NoteWidget {
 
     private final Drawable note;
+    private final float noteCenterY = (float) (sizes.note.height() * 0.5);
 
     Simple(Context context) {
         super(context);
         this.note = createNoteDrawable(context);
+    }
+
+    @Override
+    public float noteCenterY() {
+        return noteCenterY;
     }
 
     private Drawable createNoteDrawable(Context context) {
@@ -84,11 +92,17 @@ class Sharp extends NoteWidget {
 
     private final Drawable sharp;
     private final Drawable note;
+    private final float noteCenterY = (float) (sizes.sharp.height() * 0.5);
 
     Sharp(Context context) {
         super(context);
         this.sharp = createSharpDrawable(context);
         this.note = createNoteDrawable(context);
+    }
+
+    @Override
+    public float noteCenterY() {
+        return noteCenterY;
     }
 
     private Drawable createSharpDrawable(Context context) {
@@ -126,11 +140,18 @@ class Flat extends NoteWidget {
 
     private final Drawable flat;
     private final Drawable note;
+    private final float noteBottomOffset = (float) (sizes.note.height() * 0.15);
+    private final float noteCenterY = (float) (sizes.flat.height() - (sizes.note.height() * 0.5) - noteBottomOffset);
 
     Flat(Context context) {
         super(context);
         this.flat = createFlatDrawable(context);
         this.note = createNoteDrawable(context);
+    }
+
+    @Override
+    public float noteCenterY() {
+        return noteCenterY;
     }
 
     private Drawable createFlatDrawable(Context context) {
@@ -157,7 +178,7 @@ class Flat extends NoteWidget {
         super.onDraw(canvas);
         flat.draw(canvas);
         int count = canvas.save();
-        canvas.translate(sizes.flat.width(), (float) (getHeight() - sizes.note.height() - (sizes.note.height() * 0.15)));
+        canvas.translate(sizes.flat.width(), getHeight() - sizes.note.height() - noteBottomOffset);
         note.draw(canvas);
         canvas.restoreToCount(count);
     }
@@ -168,11 +189,17 @@ class Natural extends NoteWidget {
 
     private final Drawable natural;
     private final Drawable note;
+    private final float noteCenterY = (float) (sizes.sharp.height() * 0.5);
 
     Natural(Context context) {
         super(context);
         this.natural = createNaturalDrawable(context);
         this.note = createNoteDrawable(context);
+    }
+
+    @Override
+    public float noteCenterY() {
+        return noteCenterY;
     }
 
     private Drawable createNaturalDrawable(Context context) {
