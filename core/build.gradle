@@ -22,6 +22,7 @@ dependencies {
     compileOnly libraries.autoValue
     apt libraries.autoValue
     compile libraries.findbugsAnnotations
+    compile libraries.gson
 
     testCompile libraries.festAssertCore
     testCompile libraries.jUnit

@@ -10,8 +10,11 @@ import java.util.List;
 public abstract class Sequence {
 
     public static Sequence create(ConcurrentNotes... notes) {
-        List<ConcurrentNotes> list = Arrays.asList(notes);
-        return new AutoValue_Sequence(list, 0, Optional.<ConcurrentNotes>absent());
+        return create(Arrays.asList(notes));
+    }
+
+    public static Sequence create(List<ConcurrentNotes> notes) {
+        return new AutoValue_Sequence(notes, 0, Optional.<ConcurrentNotes>absent());
     }
 
     public abstract List<ConcurrentNotes> notes();

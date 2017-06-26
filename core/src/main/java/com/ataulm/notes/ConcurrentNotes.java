@@ -11,14 +11,22 @@ import java.util.List;
 @AutoValue
 public abstract class ConcurrentNotes implements Iterable<Note> {
 
+    public static ConcurrentNotes create(List<Note> notes) {
+        return new AutoValue_ConcurrentNotes(asListWithNoDuplicate(notes));
+    }
+
     public static ConcurrentNotes create(Note... notes) {
         List<Note> notesWithoutDuplicates = asListWithNoDuplicate(notes);
         return new AutoValue_ConcurrentNotes(notesWithoutDuplicates);
     }
 
-    private static List<Note> asListWithNoDuplicate(Note[] notes) {
-        HashSet<Note> set = new HashSet<>(Arrays.asList(notes));
+    private static List<Note> asListWithNoDuplicate(List<Note> notes) {
+        HashSet<Note> set = new HashSet<>(notes);
         return new ArrayList<>(set);
+    }
+
+    private static List<Note> asListWithNoDuplicate(Note[] notes) {
+        return asListWithNoDuplicate(Arrays.asList(notes));
     }
 
     abstract List<Note> notes();
