@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.ataulm.notes">
+
+  <application>
+
+    <activity android:name=".DebugActivity" />
+
+    <activity-alias
+      android:name="activity.primary_launcher"
+      android:targetActivity=".DebugActivity">
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+
+    </activity-alias>
+
+  </application>
+
+</manifest>
